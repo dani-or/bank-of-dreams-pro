@@ -6,4 +6,5 @@ import { Product } from 'models/product.model';
 export abstract class ProductBaseRepository{
   
   abstract async getAll(userId:string , productId:string): Promise<Product[]>;
+  abstract async create(p: Product, userId:string ): Promise<any>;
 }

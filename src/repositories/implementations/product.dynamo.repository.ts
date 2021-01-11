@@ -8,9 +8,29 @@ import {ProductType} from "../../enums/productType.enum";
 
 @injectable()
 export class ProductDynamoRepository extends ProductBaseRepository {
-  
+    
   
   private dynamo: DynamoDbConnector = new DynamoDbConnector();
+
+  async create(p:Product, userId:string): Promise<any> {
+    console.log({
+      balance: 0,
+      openDate: new Date().toLocaleDateString(),
+      status: ProductStatus.Open,
+      id : p.id,
+      productId: ProductType[p.type],
+      userId: userId
+    });
+    await this.dynamo.saveItem("bod-user-product",{
+      balance: 0,
+      openDate: new Date().toLocaleDateString(),
+      status: ProductStatus.Open,
+      id : p.id,
+      productId: ProductType[p.type]  ,
+      userId: userId
+    });
+    return Promise.resolve();
+  }
   
   async getAll(userId:string , productId:string): Promise<Product[]> {
     let params = {
@@ -27,12 +47,13 @@ export class ProductDynamoRepository extends ProductBaseRepository {
     let r = await this.dynamo.query(params, false);
     let products: Product[]  = [];
     if(!!r && !!r.Items){
-      r.Items.forEach(element => {        
+      r.Items.forEach(element => {
         let  p:Product = new Product({
           balance: element.balance || 0,
           openDate: element.openDate,
           status: ProductStatus[element.status],
-          type: ProductType[element.type],
+          type: ProductType[element.productId],
+          id : element.id
         });
         products.push(p);
       });

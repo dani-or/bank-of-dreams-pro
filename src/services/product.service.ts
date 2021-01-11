@@ -12,5 +12,14 @@ export class ProductService {
         const data = await this.repo.getAll(userId, productId);
         return data;
     }
+
+    public async create(typeP:string, userId: string ): Promise<any> {
+        let p: Product = new Product({
+            balance: 0,
+            type: typeP
+        });
+        let data= await this.repo.create(p, userId);
+        return data;
+    }
     
 }

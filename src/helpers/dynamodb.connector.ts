@@ -48,5 +48,20 @@ export class DynamoDbConnector {
         });
     }
     
+    public saveItem(tableName, item) {
+        return new Promise((resolve, reject) => {
+            var params = {
+                TableName: tableName,
+                Item: item
+            };
+            this.dynamodb.put(params, function (err, data) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
 
 }
