@@ -12,5 +12,4 @@ export class TransactionService {
         const data = await this.repo.getAll();
         return data;
     }
-
 }

@@ -9,6 +9,7 @@ import { AppConfig } from './app.config';
 import { ErrorExtractor } from './../helpers/error-extractor.helper';
 import { App } from './../app';
 import { ProductMockRepository } from '../repositories/implementations/product.mock.repository';
+import { ProductDynamoRepository} from '../repositories/implementations/product.dynamo.repository';
 import { ProductController } from '../controllers/product.controller';
 import { TransactionController } from '../controllers/transaction.controller';
 import { ProductService } from '../services/product.service';
@@ -17,7 +18,6 @@ import { BaseController } from './../controllers/base.controller';
 import { ProductBaseRepository } from '../repositories/product.base.repository';
 import { TransactionBaseRepository } from '../repositories/transaction.base.repository';
 import { TransactionMockRepository } from '../repositories/implementations/transaction.mock.repository';
-
 export class Container {
     private _container: InversifyContainer = new InversifyContainer();
   
@@ -70,9 +70,15 @@ export class Container {
     }
     
 
+    private getGeneralModule(): ContainerModule {
+      return new ContainerModule((bind: interfaces.Bind) => {
+        bind<AppConfig>(AppConfig).toSelf().inSingletonScope();
+      });
+    }
+
     private getRepositoriesModule(): ContainerModule {
       return new ContainerModule((bind: interfaces.Bind) => {
-        bind<ProductBaseRepository>(ProductBaseRepository).toConstantValue(new ProductMockRepository());
+        bind<ProductBaseRepository>(ProductBaseRepository).toConstantValue(new ProductDynamoRepository());
         bind<TransactionBaseRepository>(TransactionBaseRepository).toConstantValue(new TransactionMockRepository());
       });
     }
@@ -94,11 +100,7 @@ export class Container {
       });
     }
   
-    private getGeneralModule(): ContainerModule {
-      return new ContainerModule((bind: interfaces.Bind) => {
-        bind<AppConfig>(AppConfig).toSelf().inSingletonScope();
-      });
-    }
+    
   
     private getHelpersModule(): ContainerModule {
       return new ContainerModule((bind: interfaces.Bind) => {

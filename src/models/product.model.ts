@@ -1,8 +1,9 @@
 import { BaseModel } from './base.model';
 export class Product extends BaseModel {
-    name: string;
+    balance: number;
     openDate: Date | string;
-    status: number;    
+    status: string;
+    type: string;   
     constructor(init?: Partial<Product>) {
       super(init);
       Object.assign(this, init);

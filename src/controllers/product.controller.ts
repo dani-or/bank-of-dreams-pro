@@ -19,7 +19,9 @@ export class ProductController extends BaseController {
     }
 
     private async getAll(request: Request, response: Response) {
-        const data = await this.service.getAll();
+        let userId: string = request.query.userId +"";
+        let productId: string = request.query.productId + "";
+        const data = await this.service.getAll(userId , productId);
         response.send(data);
     }
 }
