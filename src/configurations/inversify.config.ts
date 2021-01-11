@@ -17,7 +17,7 @@ import { TransactionService } from '../services/transaction.service';
 import { BaseController } from './../controllers/base.controller';
 import { ProductBaseRepository } from '../repositories/product.base.repository';
 import { TransactionBaseRepository } from '../repositories/transaction.base.repository';
-import { TransactionMockRepository } from '../repositories/implementations/transaction.mock.repository';
+import { TransactionDynamoRepository } from '../repositories/implementations/transaction.dynamo.repository';
 export class Container {
     private _container: InversifyContainer = new InversifyContainer();
   
@@ -79,7 +79,7 @@ export class Container {
     private getRepositoriesModule(): ContainerModule {
       return new ContainerModule((bind: interfaces.Bind) => {
         bind<ProductBaseRepository>(ProductBaseRepository).toConstantValue(new ProductDynamoRepository());
-        bind<TransactionBaseRepository>(TransactionBaseRepository).toConstantValue(new TransactionMockRepository());
+        bind<TransactionBaseRepository>(TransactionBaseRepository).toConstantValue(new TransactionDynamoRepository());
       });
     }
   
@@ -99,8 +99,6 @@ export class Container {
         bind<ResponseLoggerMiddleware>(ResponseLoggerMiddleware).toSelf();
       });
     }
-  
-    
   
     private getHelpersModule(): ContainerModule {
       return new ContainerModule((bind: interfaces.Bind) => {

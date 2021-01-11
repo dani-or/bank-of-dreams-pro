@@ -4,5 +4,5 @@ import { injectable } from 'inversify';
 @injectable()
 export abstract class TransactionBaseRepository{
   
-  abstract getAll(): Promise<Transaction[]>;
+  abstract async getAll(productId: string): Promise<Transaction[]>;
 }

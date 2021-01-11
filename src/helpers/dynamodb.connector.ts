@@ -64,4 +64,20 @@ export class DynamoDbConnector {
         });
     }
 
+    public getItem(tableName, key) {
+        return new Promise((resolve, reject) => {
+            var params = {
+                TableName: tableName,
+                Key: key
+            };
+            this.dynamodb.get(params, function (err, data) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
 }

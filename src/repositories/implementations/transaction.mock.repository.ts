@@ -6,7 +6,7 @@ import { injectable } from "inversify";
 @injectable()
 export class TransactionMockRepository extends TransactionBaseRepository {
 
-  getAll(): Promise<Transaction[]> {
+  async getAll(productId: string): Promise<Transaction[]> {
     let trans: Transaction[]  = [];
     return Promise.resolve(trans);
   }  

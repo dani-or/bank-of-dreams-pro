@@ -8,8 +8,8 @@ export class TransactionService {
     @inject(TransactionBaseRepository) 
     public repo: TransactionBaseRepository;
 
-    public async getAll(): Promise<Transaction[]> {
-        const data = await this.repo.getAll();
+    public async getAll(productId: string): Promise<Transaction[]> {
+        const data = await this.repo.getAll(productId);
         return data;
     }
 }
