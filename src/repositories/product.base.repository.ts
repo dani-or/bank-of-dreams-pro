@@ -1,8 +1,10 @@
 import { Transaction } from '../models/transaction.model';
 import { injectable } from 'inversify';
+import { Product } from 'models/product.model';
 
 @injectable()
 export abstract class ProductBaseRepository{
   
-  abstract getAll(): Promise<Transaction[]>;
+  abstract async getAll(userId:string , productId:string): Promise<Product[]>;
+  abstract async create(p: Product, userId:string ): Promise<any>;
 }

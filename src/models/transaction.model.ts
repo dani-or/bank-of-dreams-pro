@@ -1,6 +1,6 @@
 import { BaseModel } from './base.model';
 export class Transaction extends BaseModel {
-    trsansactionDate: Date | string;
+    transactionDate: Date | string;
     description: string;
     amount: number;
     iva:number;

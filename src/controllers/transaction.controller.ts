@@ -19,7 +19,8 @@ export class TransactionController extends BaseController {
     }
 
     private async getAll(request: Request, response: Response) {
-        const data = await this.service.getAll();
+        let productId: string = request.query.productId + "";
+        const data = await this.service.getAll(productId);
         response.send(data);
     }
 }

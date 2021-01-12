@@ -15,11 +15,21 @@ export class ProductController extends BaseController {
 
     public initializeRoutes(): void {
         this.router
-      .get(this.path, this.getAll.bind(this));
+      .get(this.path, this.getAll.bind(this))
+      .post(this.path, this.create.bind(this));
     }
 
     private async getAll(request: Request, response: Response) {
-        const data = await this.service.getAll();
+        let userId: string = request.query.userId +"";
+        let productId: string = request.query.productId + "";
+        const data = await this.service.getAll(userId , productId);
         response.send(data);
     }
+
+    private async create(request: Request, response: Response) {
+        const dto = request.body;
+        const d = await this.service.create(dto.type, dto.userId);
+        response.send({});
+    }
+
 }
